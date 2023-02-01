@@ -1,0 +1,6 @@
+[submodule "botorch_scorebo"]
+	path = botorch_scorebo
+	url = git@github.com:scorebo/botorch_scorebo.git
+[submodule "ax_scorebo"]
+	path = Ax_scorebo
+	url = git@github.com:scorebo/Ax_scorebo.git
