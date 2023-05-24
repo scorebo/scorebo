@@ -1,0 +1,12 @@
+[submodule "Ax"]
+	path = Ax
+	url = git@github.com:scorebo/Ax.git
+[submodule "botorch"]
+	path = botorch
+	url = git@github.com:scorebo/botorch.git
+[submodule "LassoBench"]
+	path = LassoBench
+	url = git@github.com:ksehic/LassoBench.git
+[submodule "gpytorch"]
+	path = gpytorch
+	url = git@github.com:scorebo/gpytorch.git
