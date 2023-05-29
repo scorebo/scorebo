@@ -1,4 +1,4 @@
-ons for installing and running the Cosmological Benchmark instance. 
+Instructions for installing and running the Cosmological Benchmark instance. 
 
 The benchmark aims at finding the best parameter setting in a physical simulator.
 CAMB is the simulator and LRGDR calculates the likelihood of a given parameter setting.
