@@ -1,0 +1,38 @@
+ons for installing and running the Cosmological Benchmark instance. 
+
+The benchmark aims at finding the best parameter setting in a physical simulator.
+CAMB is the simulator and LRGDR calculates the likelihood of a given parameter setting.
+
+The setup requires an old version of CAMB with patches from the LRGDR7 software.
+CAMB performs the simulation from a parameters file and outputs a metrics file. LRGDR then reads this metric file.
+In scorebo, we then run the cosmological benchmark from "botorch/benchmarking/cosmo_task.py" that takes a parameter set as input, modifies the 
+CAMB parameters file, calls CAMB, then calls LRGDR7 and reads and returns the output.
+
+For the installation, you first need to make sure you have fortran running. Test by "ifort --version".
+
+Go to the camb folder. 
+
+Next you need to download CAMB.
+
+For this installation
+we already provide the patched version of CAMB, but you need to download the LRGDR7 software. 
+
+Installation of CAMB:
+We use the Feb2009 version tagged with Feb09. Download it from https://github.com/cmbant/CAMB/releases/tag/Feb09. 
+
+Installation of LRGD:
+Download LRGDR7 from https://ascl.net/1306.012.
+
+Patch and make CAMB:
+Move the inidriver.F90 module.f90, bsplinepk.c and Makefile from the lrgdr7like/CAMBfeb09patch to CAMB-Feb09 replacing where needed.
+Modify the Makefile in CAMB-Feb09 for your system. (I removed the -arch CFLAG, the -fpp2 -vec_report0 FFLAGS and changed openmp to qopenmp).
+run make
+test by running ./camb params.ini
+
+Make LRGDR7:
+Go the the lrgdr-folder and run make all
+
+
+Lastly, if you want to run cosmo without SCOreBO you need to to connect lrgdr7 to camb by setting the path
+output_root = ../lrgdr7like/models/lrgdr7model
+in the params.ini file in camb. In ScoreBO however, however, this is done automatically in cosmo_task.py.
