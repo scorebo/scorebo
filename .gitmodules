@@ -10,3 +10,6 @@
 [submodule "gpytorch"]
 	path = gpytorch
 	url = git@github.com:scorebo/gpytorch.git
+[submodule "mf-prior-bench"]
+	path = mf-prior-bench
+	url = git@github.com:automl/mf-prior-bench.git

@@ -1,6 +1,6 @@
 ## Self-correcting Bayesian Optimization (SCoreBO) through Bayesian Active Learning official repository for NeurIPS 2023.
 
-This repository makes use of BOTorch[1], Gpytorch[2], Ax as submodules, as well as Hydra to run experiments, since each of these repositories contain necessary modifications to make all experiments runnable. 
+This repository makes use of BOTorch[1], Gpytorch[2], Ax as submodules, as well as Hydra to run experiments, since each of these repositories contain necessary modifications to make all experiments runnable. All experiments are run with seed 1-MAX_REPS, where the number of max repetitions is specified for each benchmark in each caption in the paper.
 
 ### TO RUN:
 0. Retrieve the necessary repositories:     
@@ -38,7 +38,7 @@ All runs additionally include a ```...hps.json``` which contains all the hyperpa
 
 The various available arguments are (active learning-based benchmarks/models/algos first, naming differences in branin and hartmann6 specify the AL/BO noise levels):
 
-```benchmark: higdon, gramacy1, gramacy2, ishigami, active_branin, active_hartmann6, gp_4dim, branin, rosenbrock2, rosenbrock4, hartmann3, hartmann4, hartmann6, gp_8dim, gp_2_2_2dim, gp_2_2_2_2_2dim, cosmo, ackley4_25, hartmann6_25, lasso_dna```
+```benchmark: higdon, gramacy1, gramacy2, ishigami, active_branin, active_hartmann6, gp_4dim, branin, rosenbrock2, rosenbrock4, hartmann3, hartmann4, hartmann6, gp_8dim, gp_2_2_2dim, gp_2_2_2_2_2dim, cosmo, ackley4_25, hartmann6_25, lasso_dna, pd1_wmt, pd1_lm1b, pd1_cifar```
 
 ##### GP SAMPLE TASKS.
 First, create the csv files which contain the fourier features for each sample task. This is done by (inside the botorch directory), running:
@@ -69,6 +69,8 @@ model choices:
 ``` botorch ```: BoTorch Prior, used for 8-dim GP experimetns
 
 ``` saasbo ```: SAASBO Prior, used for high-dimensional experiments.
+
+``` bo_warping ```: HEBO Warping Prior, used for PD1 tasks.
 
 The number of samples, warmup and thinning are changed by entering ```model.num_samples=XX```, ```model.num_samples=YY``` or ```model.thinning=ZZ```. The pyro MC progress bar can be turned of with  ```model.disable_progbar=True``` as additional command line arguments.
 
@@ -107,6 +109,18 @@ RECFAST_fudge_He=[0, 100]
 ```
 
 For licensing reasons, we cannot provide the full code for running the benchmark. We have, however, left in the script for calling the likelihood (including the bounds on the benchmark) in ```benchmarking/cosmo_task.py```.
+
+
+##### PD1 benchmarks with input warping.
+The PD1 benchmarks require the download of datasets from the mf-prior-bench repository. The extensive how-to is available in that repo's readme, but in short:
+
+Go into the mf-prior-bench repository, and download the required datasets for PD1:
+```python -m mfpbench.download```
+
+After doing so, ensure that the surrogates (two JSON-files per benchmark) can be found in mf-prior-bench/data/surrogates. If you run into issues, we kindly refer you to the README of the mf-prior-bench repository.
+The name of the PD1 tasks are ```pd1_wmt, pd1_lm1b, pd1_cifar```
+
+
 ### REFERENCES:
 1. Balandat, M., Karrer, B., Jiang, D. R., Daulton, S., Letham, B., Wilson, A. G., and Bakshy, E. Botorch: A framework for efficient monte-carlo bayesian optimization. In Ad- vances in Neural Information Processing Systems, 2020. URL http://arxiv.org/abs/1910.06403.
 
